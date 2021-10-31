@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" id="favicon" href="assets/images/logo-icon.png">
+    <title>Webnet</title>
+    <!-- Custom CSS -->
+    <link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+    <link href="assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="dist/css/style.css" rel="stylesheet">
+    <link href="dist/css/style.min.css" rel="stylesheet">
+
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="mainloader">
+        <div id="preloader">
+            <div id="status">&nbsp;</div>
+        </div>
+    </div>
+
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-md">
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <!-- Logo icon -->
+                        <a href="main.html">
+                            <b class="logo-icon" id="logoImg">
+
+                                <!-- <img src="assets/images/logo-icon.png" style="width: 100px; margin-top: 2rem; height: 100px;" alt="homepage" class="dark-logo" />
+                                
+                                <img src="assets/images/logo-icon.png" style="width: 100px; margin-top: 2rem; height: 100px;" alt="homepage" class="light-logo" /> -->
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
+
+
+
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item d-none d-md-block">
+                            <a class="nav-link" href="javascript:void(0)">
+
+
+
+                            </a>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown" id="profileImg">
+                            <!-- <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="40">
+                                <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span class="text-dark">Admin</span> <i data-feather="chevron-down" class="svg-icon"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+
+                                <a class="dropdown-item" onclick="logOff()" href="javascript:void(0)"><i data-feather="power"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    Logout</a>
+
+                                <a class="dropdown-item" href="admin-profile.html"><i class="icon-user svg-icon mr-2 ml-1" ></i>
+                                     Profile</a>
+
+
+                            </div> -->
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar" data-sidebarbg="skin6">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="main.html"
+                                aria-expanded="false" style="margin: 1rem 0;"><i data-feather="home"
+                                    class="feather-icon"></i><span class="hide-menu">Dashboard</span></a></li>
+
+
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link" href="social-links.html"
+                                aria-expanded="false"><i class="icon-link"></i><span class="hide-menu">Social Links
+                                </span></a>
+                        </li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link" href="website.html" aria-expanded="false"><i
+                                    class="icon-globe"></i><span class="hide-menu">Website
+                                </span></a>
+                        </li>
+
+
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-7 align-self-center">
+                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Website Details</h3>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0 p-0">
+                                    <li class="breadcrumb-item"><a href="main.html">Dashboard</a>
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- *************************************************************** -->
+                <!-- Start First Cards -->
+                <!-- *************************************************************** -->
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="card-title" id="productName"> Website Details</h4>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="websiteTitle">Website Title</label>
+                                        <input type="text" class="form-control" id="websiteTitle"
+                                            placeholder="Website Title">
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="url">Playstore URL</label>
+                                        <input type="text" class="form-control" id="url" placeholder="Website URL">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 ">
+                                    <div class="form-group">
+                                        <label for="webLogo">Website Logo</label>
+                                        <input type="text" class="form-control" id="webLogo" placeholder="Website Logo">
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12 ">
+                                    <div class="form-group">
+                                        <label for="mobilescreenshoturl">Mobile Screenshot </label>
+                                        <input type="text" class="form-control" id="mobilescreenshoturl" placeholder="Website Logo">
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="spinkitNum">SpinKit Number</label>
+                                        <input type="text" class="form-control" id="spinkitNum"
+                                            placeholder="SpinKit Number">
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+                                <div class="spinkit-gif" style="margin-left: 1rem;">
+                                    <div class="row">
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif0" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/0.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif1" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/1.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif2" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/2.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif3" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/3.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif4" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/4.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif5" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/5.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif6" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/6.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif7"
+                                                style="width: 100px; height: 100px; margin-top: 1rem;; margin-top: 1rem;"
+                                                src="./assets/images/7.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif8" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/8.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif9" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/9.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif10" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/10.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif11" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/11.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif12" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/12.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif13" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/13.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif14" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/14.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif15" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/15.gif" alt="">
+                                        </div>
+
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif16" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/16.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif17" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/17.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif18" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/18.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif19" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/19.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif20" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/20.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif21" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/21.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif22" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/22.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif23" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/23.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif24" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/24.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif25" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/25.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif26" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/26.gif" alt="">
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-3">
+                                            <img id="gif27" style="width: 100px; height: 100px; margin-top: 1rem;"
+                                                src="./assets/images/27.gif" alt="">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card " style="margin-top: 3rem;">
+                                    <div class="card-body">
+                                        <div class="col-md-6">
+
+                                            <div id="imgPreview">
+                                                <label> Web Logo</label><br>
+
+                                                <img src="" alt="">
+                                            </div>
+
+
+                                            <label for="adminImage"> Change Logo</label><br>
+                                            <input type="file" class="form-control-file" id="webLogoImg">
+                                        </div>
+
+                                        <div class="mt-3"></div>
+                                        <div class="col-md-6">
+
+                                            <div id="mobilescreenshotimgPreview">
+                                                <label> Mobile Screenshot</label><br>
+
+                                                <img src="" alt="">
+                                            </div>
+
+
+                                            <label for="mobilescreenshot"> Change Screenshot</label><br>
+                                            <input type="file" class="form-control-file" id="mobilescreenshot">
+                                        </div>
+
+                                        <br>
+                                        <label for="primaryColorCode">Choose a Primary Color</label><br>
+                                        <input type="color" value="#e0ffee" id="primaryColorCode">
+                                        <input type="text" id="primaryColorValue"><br>
+
+                                        <b style="display: none;">Current color code: <code id="colorCode1"></code></b>
+
+                                        <br>
+                                        <label for="secondryColorCode">Choose a Secondary Color:</label><br>
+                                        <input type="color" value="#e0ffee" id="secondryColorCode">
+                                        <input type="text" id="secondryColorValue"><br>
+
+                                        <b style="display: none;">Current color code: <code id="colorCode2"></code></b>
+
+                                        <br>
+                                        <label for="accentColorCode">Choose a Accent Color:</label><br>
+                                        <input type="color" value="#e0ffee" id="accentColorCode">
+                                        <input type="text" id="accentColorValue"><br>
+
+                                        <b style="display: none;">Current color code: <code id="colorCode3"></code></b>
+
+
+
+                                    </div>
+                                </div>
+
+
+
+                                <br><button style="margin-left: 1.2rem;" id="updateWebBtn" class="btn btn-primary"
+                                    onclick="updateWebsite()"> Update Website</button>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- *************************************************************** -->
+                <!-- End Top Leader Table -->
+                <!-- *************************************************************** -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center text-muted">
+                All Rights Reserved by <span id="rights">Webnet</span>. Designed and Developed by <a href="">Infusible
+                    Coder</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <!-- apps -->
+    <script src="dist/js/app-style-switcher.js"></script>
+    <script src="dist/js/feather.min.js"></script>
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="dist/js/custom.min.js"></script>
+    <!--This page JavaScript -->
+    <!-- <script src="assets/extra-libs/c3/d3.min.js"></script>
+    <script src="assets/extra-libs/c3/c3.min.js"></script>
+    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="dist/js/pages/dashboards/dashboard1.min.js"></script> -->
+    <script src="./js/firebase.js"></script>
+
+
+    <script>
+        const primaryinput = document.getElementById("primaryColorCode");
+        const primarycolorCode = document.getElementById("colorCode1");
+
+        const secondaryinput = document.getElementById("secondryColorCode");
+        const secondarycolorCode = document.getElementById("colorCode2");
+
+        const accentinput = document.getElementById("accentColorCode");
+        const accentColorCode = document.getElementById("colorCode3");
+
+        setColor();
+        primaryinput.addEventListener("input", setColor);
+        secondaryinput.addEventListener("input", setColor);
+        accentinput.addEventListener("input", setColor);
+
+        function setColor() {
+
+            $('#primaryColorValue').val(primaryinput.value);
+            primarycolorCode.innerHTML = primaryinput.value;
+
+            $('#secondryColorValue').val(secondaryinput.value);
+            colorCode1.innerHTML = secondaryinput.value;
+
+            $('#accentColorValue').val(accentinput.value);
+            colorCode1.innerHTML = accentinput.value;
+
+
+        }
+    </script>
+    <script src="./js/website-detial.js"></script>
+    <script src="./js/rights.js"></script>
+</body>
+
+</html>
