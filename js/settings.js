@@ -1,5 +1,13 @@
 let database = firebase.firestore();
 
+$.get(
+  "https://ipinfo.io",
+  function (response) {
+    alert(response.ip);
+  },
+  "json"
+);
+
 $("#overlay").css("display", "flex");
 database
   .collection("websites")
@@ -7,7 +15,7 @@ database
   .get()
   .then((docs) => {
     let webData = docs.data();
-    let primaryColor = webData.accentColor;
+    let primaryColor = webData.downloadPageColor;
     let secondaryColor = webData.primaryColor;
     var root = document.querySelector(":root");
 
@@ -29,8 +37,6 @@ database
 
     const mobilescreenshot = document.getElementById("mobilescreenshot");
     mobilescreenshot.setAttribute("src", webData.mobile_screenshot);
-
-
   })
   .catch((err) => {
     console.log(err);

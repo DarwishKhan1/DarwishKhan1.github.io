@@ -383,10 +383,14 @@
         const accentinput = document.getElementById("accentColorCode");
         const accentColorCode = document.getElementById("colorCode3");
 
+        const pageinput = document.getElementById("downloadPageColorCode");
+        const pageColorCode = document.getElementById("colorCode4");
+
         setColor();
         primaryinput.addEventListener("input", setColor);
         secondaryinput.addEventListener("input", setColor);
         accentinput.addEventListener("input", setColor);
+        pageinput.addEventListener("input", setColor);
 
         function setColor() {
 
@@ -399,6 +403,8 @@
             $('#accentColorValue').val(accentinput.value);
             colorCode1.innerHTML = accentinput.value;
 
+            $('#downloadPageColorValue').val(pageinput.value);
+            colorCode1.innerHTML = pageinput.value;
 
         }
     </script>
