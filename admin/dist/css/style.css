@@ -10573,7 +10573,9 @@ a.text-purple:focus {
 *******************/
 
 .footer {
-    padding: 15px 20px;
+    position: absolute !important; 
+    bottom: 0px;
+    left: 180px;
 }
 
 

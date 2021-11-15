@@ -1,3 +1,9 @@
+const auth = localStorage.getItem("videoDownloaderAdmin");
+if (!auth) {
+    window.location.href = "index.html";
+}
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get('id');
 let db = firebase.firestore()
@@ -15,11 +21,7 @@ db.collection('social_llinks').doc(myParam).get().then(function(links) {
 
 }).then(function() {
 
-    jQuery("#status").fadeOut();
-
-    jQuery("#preloader").fadeOut("slow");
-
-
+    $("#overlay1").css("display", "none");
 
 });
 

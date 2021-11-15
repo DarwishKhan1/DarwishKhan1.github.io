@@ -7,8 +7,8 @@ database
   .get()
   .then((docs) => {
     let webData = docs.data();
-    let primaryColor = webData.primaryColor;
-    let secondaryColor = webData.secondaryColor;
+    let primaryColor = webData.accentColor;
+    let secondaryColor = webData.primaryColor;
     var root = document.querySelector(":root");
 
     root.style.setProperty("--primary-color", primaryColor);
