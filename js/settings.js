@@ -1,13 +1,5 @@
 let database = firebase.firestore();
 
-$.get(
-  "https://ipinfo.io",
-  function (response) {
-    alert(response.ip);
-  },
-  "json"
-);
-
 $("#overlay").css("display", "flex");
 database
   .collection("websites")

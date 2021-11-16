@@ -118,7 +118,7 @@ const getPlaylistVideoUrl = (videos, videoquality) => {
     if (videos[i].acodec !== "none" && videos[i].vcodec !== "none") {
       if (videoquality) {
         if (videos[i].quality.toString() === videoquality.toString()) {
-          console.log(videoquality);
+          
           url = videos[i].url;
           return url;
         }
@@ -211,7 +211,7 @@ $("select").change(function () {
 const getvideoQualites = (videos) => {
   for (let i = 0; i < videos.length; i++) {
     if (videos[i].acodec !== "none" && videos[i].vcodec !== "none") {
-      console.log();
+    
       $("#videoqualities").append(
         `<option value="${videos[i].quality}" onclick="displaySpecificQualityVideos(${videos[i].quality})"> ${videos[i].quality}</option>`
       );
@@ -300,7 +300,7 @@ const displayData = (url) => {
     .post(myUrl, myData)
     .then(function (response) {
       let result = response.data.formats;
-      console.log(result);
+    
       if (result) {
         result = getVideos(response);
       }

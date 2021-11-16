@@ -83,7 +83,6 @@ async function updateWebsite() {
 
     $("#updateWebBtn").html("Please Wait.....");
 
-    console.log(downloadPageColor);
     webRef
       .update({
         url: url,

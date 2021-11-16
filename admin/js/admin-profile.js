@@ -16,7 +16,6 @@ db.collection("admin")
   .doc("Pcio0nYhI4AkiNTAEDY4")
   .get()
   .then(function (data) {
-    console.log(data.data());
 
     $("#adminName").html(data.data().name);
     $("#adminEmail").html(data.data().email);
@@ -60,8 +59,7 @@ function editAdminProfile() {
       "state_changed",
       (snapshot) => {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        console.log(snapshot.state);
+       
         switch (snapshot.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
             console.log("Upload is paused");
@@ -77,7 +75,6 @@ function editAdminProfile() {
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log("File available at", downloadURL);
 
           let adminRef = db.collection("admin").doc("Pcio0nYhI4AkiNTAEDY4");
 

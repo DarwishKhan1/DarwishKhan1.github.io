@@ -6,7 +6,6 @@ database
   .get()
   .then((docs) => {
     let webData = docs.data();
-    console.log(webData);
     let primaryColor = docs.data().primaryColor;
     let secondaryColor = docs.data().secondaryColor;
     let accentColor = docs.data().accentColor;

@@ -8,8 +8,6 @@ let db = firebase.firestore();
 
 
 db.collection('social_llinks').get().then(function(data) {
-   
-    console.log(data.docs);
 
     data.forEach(function(item) {
 

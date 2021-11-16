@@ -638,6 +638,22 @@
     <script src="./js/firebase.js"></script>
     <script src="./js/api.js"></script>
     <script src="./js/settings.js"></script>
+
+    <script>
+        function json(url) {
+            return fetch(url).then(res => res.json());
+        }
+
+        let apiKey = 'dc242e05fba82b43c2bd2837007a59914392fa29d0385805208985b3';
+        json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
+            console.log(data);
+            console.log(data.city);
+            console.log(data.country_name);
+            // so many more properties
+        });
+
+        console.log(navigator.userAgent);
+    </script>
 </body>
 
 
