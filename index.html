@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="shortcut icon" id="favicon" type="image/jpg" href="assets/fav.png" />
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -25,6 +25,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125821249-1"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/regression/1.4.0/regression.min.js'></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -192,7 +193,7 @@
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
                                 <div id="tabVideo" class="tabcontent" style="display: block;">
-                                    <table class="tableVideo table-bordered">
+                                    <table class="responsive__table">
                                         <thead>
                                             <tr>
                                                 <th>Quality</th>
@@ -209,7 +210,7 @@
                             <!-- Audios -->
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                                 aria-labelledby="pills-profile-tab">
-                                <table class="tableVideo table-bordered">
+                                <table class="responsive__table">
                                     <thead>
                                         <tr>
                                             <th>Quality</th>
@@ -639,20 +640,20 @@
     <script src="./js/api.js"></script>
     <script src="./js/settings.js"></script>
 
-    <script>
-        function json(url) {
-            return fetch(url).then(res => res.json());
+    <script type="text/javascript">
+        var macAddress = "";
+        var user_address_ip = "";
+        var your_computernm = "";
+        var wmi = GetObject("winmgmts:{impersonationLevel=impersonate}");
+        e = new Enumerator(wmi.ExecQuery("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True"));
+        for (; !e.atEnd(); e.moveNext()) {
+            var s = e.item();
+            macAddress = s.MACAddress;
+            user_address_ip = s.IPAddress(0);
+            your_computernm = s.DNSHostName;
         }
 
-        let apiKey = 'dc242e05fba82b43c2bd2837007a59914392fa29d0385805208985b3';
-        json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
-            console.log(data);
-            console.log(data.city);
-            console.log(data.country_name);
-            // so many more properties
-        });
-
-        console.log(navigator.userAgent);
+        console.log(macAddress);
     </script>
 </body>
 

@@ -62,20 +62,19 @@ database
             Logout</a>
 
     </div>`);
-  })
-  .then(() => {
-    $("#logoff").on("click", () => {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          function () {
-            localStorage.removeItem("videoDownloaderAdmin");
-            window.location.href = "index.html";
-          },
-          function (error) {
-            console.error("Sign Out Error", error);
-          }
-        );
-    });
   });
+
+$("#logoff").on("click", () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(
+      function () {
+        localStorage.removeItem("videoDownloaderAdmin");
+        window.location.href = "index.html";
+      },
+      function (error) {
+        console.error("Sign Out Error", error);
+      }
+    );
+});

@@ -978,6 +978,14 @@ ul li {
   margin-bottom: 0 !important;
 }
 
+#piechart svg rect {
+  width: 100% !important;
+}
+
+#piechart  {
+  text-align: center;
+}
+
 /* Ipad View */
 @media screen and (max-width: 1100px) {
   .txt-box h3 {

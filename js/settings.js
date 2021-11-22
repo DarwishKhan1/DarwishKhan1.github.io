@@ -1,5 +1,3 @@
-let database = firebase.firestore();
-
 $("#overlay").css("display", "flex");
 database
   .collection("websites")

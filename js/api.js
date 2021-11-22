@@ -1,4 +1,7 @@
 let gettingQualitiesCalled = false;
+let apiKey = "dc242e05fba82b43c2bd2837007a59914392fa29d0385805208985b3";
+let database = firebase.firestore();
+
 const videoExtensions = [
   "mp4",
   "(WithWatermark) mp4",
@@ -26,6 +29,42 @@ const audioExtensions = [
   "m4a",
   "webm",
 ];
+
+const isFromMobile = navigator.userAgentData.mobile;
+
+function getIpAddress(url) {
+  return fetch(url).then((res) => res.json());
+}
+
+getIpAddress(`https://api.ipdata.co?api-key=${apiKey}`)
+  .then(async (data) => {
+    const ip = data.ip;
+    const country = data.country_name;
+    const countryCode = data.country_code;
+    const region = data.region;
+    const long = data.longitude;
+    const lat = data.latitude;
+    const city = data.city;
+    const timeStamp = Date.now();
+    const useragent = navigator.userAgent;
+    const dbRef = await database.collection("VisitingUsers").doc();
+    await dbRef.set({
+      ip,
+      country,
+      timeStamp,
+      countryCode,
+      region,
+      long,
+      lat,
+      useragent,
+      city,
+      id: dbRef.id,
+      isFromMobile,
+    });
+  })
+  .catch((err) => {
+    console.log("Saving User Info Error: ", err.message);
+  });
 
 // How to use use guide video
 $(document).on("click", ".js-videoPoster", function (ev) {
@@ -86,6 +125,7 @@ const getQoute = (title) => {
 $("#pastelink").click(async () => {
   if (navigator.clipboard) {
     let text = await navigator.clipboard.readText();
+
     document.getElementById("videoLink").value = text;
   } else {
     $("#description").append("Clipboard not supported");
@@ -118,7 +158,6 @@ const getPlaylistVideoUrl = (videos, videoquality) => {
     if (videos[i].acodec !== "none" && videos[i].vcodec !== "none") {
       if (videoquality) {
         if (videos[i].quality.toString() === videoquality.toString()) {
-          
           url = videos[i].url;
           return url;
         }
@@ -211,7 +250,6 @@ $("select").change(function () {
 const getvideoQualites = (videos) => {
   for (let i = 0; i < videos.length; i++) {
     if (videos[i].acodec !== "none" && videos[i].vcodec !== "none") {
-    
       $("#videoqualities").append(
         `<option value="${videos[i].quality}" onclick="displaySpecificQualityVideos(${videos[i].quality})"> ${videos[i].quality}</option>`
       );
@@ -300,7 +338,7 @@ const displayData = (url) => {
     .post(myUrl, myData)
     .then(function (response) {
       let result = response.data.formats;
-    
+
       if (result) {
         result = getVideos(response);
       }
@@ -470,6 +508,38 @@ const showResponse = async () => {
     document.getElementsByClassName("popup")[0].classList.add("active");
     return;
   }
+
+  getIpAddress(`https://api.ipdata.co?api-key=${apiKey}`)
+    .then(async (data) => {
+      const ip = data.ip;
+      const country = data.country_name;
+      const countryCode = data.country_code;
+      const region = data.region;
+      const long = data.longitude;
+      const lat = data.latitude;
+      const city = data.city;
+      const timeStamp = Date.now();
+      const useragent = navigator.userAgent;
+      const dbRef = await database.collection("DownloadUsers").doc();
+
+      await dbRef.set({
+        ip,
+        country,
+        city,
+        timeStamp,
+        countryCode,
+        region,
+        long,
+        lat,
+        useragent,
+        id: dbRef.id,
+        isFromMobile,
+        url: link,
+      });
+    })
+    .catch((err) => {
+      console.log("Saving User Info Error: ", err.message);
+    });
 
   if (link.includes("youtube")) {
     let url = link;
