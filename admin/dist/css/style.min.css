@@ -83,35 +83,34 @@ input {
 }
 
 .responsive__table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .responsive__table thead tr:first-child {
-    border-radius: 10px;
-    margin-left: 10px;
-  }
-  
-  .responsive__table tbody tr {
-    margin-bottom: 5px;
-  }
-  
-  .responsive__table td,
-  .responsive__table th {
-    text-align: start;
-    font-size: 16px;
-  }
-  
-  .responsive__table td:first-child:last-child {
-    padding-top: 25px;
-  }
-  
-  .table-list-item:not(:last-child) {
-    font-size: 14px;
-    border-bottom: 1px solid #aaa9a9;
-    margin: 1px 0;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.responsive__table thead tr:first-child {
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+.responsive__table tbody tr {
+  margin-bottom: 5px;
+}
+
+.responsive__table td,
+.responsive__table th {
+  text-align: start;
+  font-size: 16px;
+}
+
+.responsive__table td:first-child:last-child {
+  padding-top: 25px;
+}
+
+.table-list-item:not(:last-child) {
+  font-size: 14px;
+  border-bottom: 1px solid #aaa9a9;
+  margin: 1px 0;
+}
 
 /* #overlayer {
     width: 100%;
@@ -10664,12 +10663,15 @@ fieldset:disabled a.btn {
 
 .nav-pills .nav-link {
   border-radius: 2px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  margin: 2px 5px;
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #00a4f8;
+  background-color: var(--accent);
 }
 
 .nav-fill .nav-item {

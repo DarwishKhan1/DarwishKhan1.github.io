@@ -982,7 +982,7 @@ ul li {
   width: 100% !important;
 }
 
-#piechart  {
+#piechart {
   text-align: center;
 }
 
@@ -1089,6 +1089,12 @@ ul li {
   border-collapse: collapse;
 }
 
+.responsive__table thead {
+  border: 1px solid var(--primary-color);
+  padding: 5px;
+  margin-right: 10px;
+}
+
 .responsive__table thead tr:first-child {
   border-radius: 10px;
   margin-left: 10px;
@@ -1116,6 +1122,11 @@ ul li {
 
 /* Mobile View */
 @media screen and (max-width: 700px) {
+
+  /* .section-version-1{
+    position: relative;
+  } */
+
   /* Table Responsiveness */
   .responsive__table thead {
     display: none;

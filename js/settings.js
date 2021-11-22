@@ -29,6 +29,7 @@ database
     mobilescreenshot.setAttribute("src", webData.mobile_screenshot);
   })
   .catch((err) => {
+    $("#overlay").css("display", "none");
     console.log(err);
   });
 

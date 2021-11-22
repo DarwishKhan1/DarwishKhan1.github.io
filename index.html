@@ -173,7 +173,6 @@
                         </div>
                     </div>
 
-
                 </div>
                 <div class="col-md-7">
                     <div id="response">
@@ -198,7 +197,8 @@
                                             <tr>
                                                 <th>Quality</th>
                                                 <th>File size</th>
-                                                <th>Status</th>
+                                                <th>Link</th>
+                                                <th>Mirror</th>
                                             </tr>
                                         </thead>
                                         <tbody id="singleVideo">
@@ -215,7 +215,8 @@
                                         <tr>
                                             <th>Quality</th>
                                             <th>File size</th>
-                                            <th>Status</th>
+                                            <th>Link</th>
+                                            <th>Mirror</th>
                                         </tr>
                                     </thead>
                                     <tbody id="singleAudio">
@@ -639,22 +640,6 @@
     <script src="./js/firebase.js"></script>
     <script src="./js/api.js"></script>
     <script src="./js/settings.js"></script>
-
-    <script type="text/javascript">
-        var macAddress = "";
-        var user_address_ip = "";
-        var your_computernm = "";
-        var wmi = GetObject("winmgmts:{impersonationLevel=impersonate}");
-        e = new Enumerator(wmi.ExecQuery("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True"));
-        for (; !e.atEnd(); e.moveNext()) {
-            var s = e.item();
-            macAddress = s.MACAddress;
-            user_address_ip = s.IPAddress(0);
-            your_computernm = s.DNSHostName;
-        }
-
-        console.log(macAddress);
-    </script>
 </body>
 
 

@@ -47,20 +47,28 @@ getIpAddress(`https://api.ipdata.co?api-key=${apiKey}`)
     const city = data.city;
     const timeStamp = Date.now();
     const useragent = navigator.userAgent;
-    const dbRef = await database.collection("VisitingUsers").doc();
-    await dbRef.set({
-      ip,
-      country,
-      timeStamp,
-      countryCode,
-      region,
-      long,
-      lat,
-      useragent,
-      city,
-      id: dbRef.id,
-      isFromMobile,
-    });
+
+    const ref = await database
+      .collection("VisitingUsers")
+      .where("ip", "==", ip)
+      .get();
+
+    if (typeof ref.docs === "undefined") {
+      const dbRef = await database.collection("VisitingUsers").doc();
+      await dbRef.set({
+        ip,
+        country,
+        timeStamp,
+        countryCode,
+        region,
+        long,
+        lat,
+        useragent,
+        city,
+        id: dbRef.id,
+        isFromMobile,
+      });
+    }
   })
   .catch((err) => {
     console.log("Saving User Info Error: ", err.message);
@@ -406,23 +414,24 @@ const displayData = (url) => {
       }
 
       $("#response").css("display", "inherit");
+      $("#copyright-response").css("display", "none");
 
       result.totalVideos.reverse().forEach((item) => {
         $("#singleVideo").append(`
           <tr>
-          <td>
+          <td data-label="Extension">
              ${
                item.acodec === "none"
                  ? "<i class='fas fa-volume-mute'></i>"
                  : ""
              }  ${item.ext}
           </td>
-          <td>
+          <td  data-label="File Size">
               ${
                 item.filesize > 1024 * 1024 ? formatBytes(item.filesize) : "NaN"
               }
           </td>
-          <td>
+          <td  data-label="Link">
               <a href="${item.url}" rel="noreferrer" target="_blank" class="btn"
                   data-quality="720" data-type="mp4">
                   <span>
@@ -431,7 +440,7 @@ const displayData = (url) => {
                   <span class="download-label"> Download </span>
               </a>
           </td>
-          <td>
+          <td  data-label="Mirror">
           <a href="https://video.infusiblecoder.com/allvideoapk/download.php?url=${encodeURIComponent(
             btoa(item.url)
           )}&type=All_Video_Downloader_${data.source}_${getQoute(
@@ -450,17 +459,17 @@ const displayData = (url) => {
       result.totalAudios.forEach((item) => {
         $("#singleAudio").append(`
             <tr>
-            <td>
+            <td  data-label="Extension">
                ${item.ext}
             </td>
-            <td>
+            <td  data-label="File Size">
                 ${
                   item.filesize > 1024 * 1024
                     ? formatBytes(item.filesize)
                     : "NaN"
                 }
             </td>
-            <td>
+            <td  data-label="Link">
                 <a href="${
                   item.url
                 }" rel="noreferrer" target="_blank" class="btn"
@@ -472,7 +481,7 @@ const displayData = (url) => {
                 </a>
             </td>
             
-            <td>
+            <td  data-label="Mirror">
             <a href="https://video.infusiblecoder.com/allvideoapk/download.php?url=${
               item.url
             }&type=All_Video_Downloader_${
