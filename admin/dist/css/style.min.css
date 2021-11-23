@@ -7892,16 +7892,16 @@ pre code {
 .table th {
   padding: 1rem;
   vertical-align: top;
-  border-top: 1px solid #e8eef3;
+  border-top: 1px solid #bebebe;
 }
 
 .table thead th {
   vertical-align: bottom;
-  border-bottom: 2px solid #e8eef3;
+  border-bottom: 1px solid #bebebe;
 }
 
 .table tbody + tbody {
-  border-top: 2px solid #e8eef3;
+  border-top: 2px solid #bebebe;
 }
 
 .table-sm td,
@@ -7912,7 +7912,7 @@ pre code {
 .table-bordered,
 .table-bordered td,
 .table-bordered th {
-  border: 1px solid #e8eef3;
+  border: 1px solid #bebebe;
 }
 
 .table-bordered thead td,

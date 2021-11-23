@@ -17,7 +17,6 @@ db.collection("DownloadUsers")
     $("#websiteCount").html(querySnapshot.docs.length);
 
     showDownladerDataOnMap();
-
   })
   .catch((err) => {
     alert(err.message);
@@ -32,6 +31,7 @@ db.collection("VisitingUsers")
     // Load google charts
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(ddrawChart);
 
     $("#socialLinksCount").html(querySnapshot.docs.length);
 
@@ -64,6 +64,38 @@ db.collection("social_llinks")
 
 // Draw the chart and set the chart values
 function drawChart() {
+  const pcUsers = [];
+  const mUsers = [];
+
+  VisitingUsers.forEach((item) => {
+    
+    if (item.isFromMobile) {
+      mUsers.push(item);
+    } else {
+      pcUsers.push(item);
+    }
+  });
+  var data = google.visualization.arrayToDataTable([
+    ["Users", "PC Users & Mobile Users"],
+    ["PC Users", pcUsers.length],
+    ["Mobile Users", mUsers.length],
+  ]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {
+    title: "PC Users & Mobile Users",
+    width: "100%",
+    height: 373,
+  };
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(
+    document.getElementById("piechart")
+  );
+  chart.draw(data, options);
+}
+
+function ddrawChart() {
   var data = google.visualization.arrayToDataTable([
     ["Users", "User downloads"],
     ["Visitors", VisitingUsers.length],
@@ -79,7 +111,7 @@ function drawChart() {
 
   // Display the chart inside the <div> element with id="piechart"
   var chart = new google.visualization.PieChart(
-    document.getElementById("piechart")
+    document.getElementById("dpiechart")
   );
   chart.draw(data, options);
 }
@@ -526,8 +558,8 @@ const showDownladerDataOnMap = () => {
   var max = 0,
     min = Number.MAX_VALUE,
     cc,
-    startColor = [200, 238, 255],
-    endColor = [0, 100, 145],
+    endColor = [170, 41, 41],
+    startColor = [255, 201, 201],
     colors = {},
     hex;
 

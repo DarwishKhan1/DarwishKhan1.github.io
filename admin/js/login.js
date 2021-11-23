@@ -1,3 +1,9 @@
+const auth = localStorage.getItem("videoDownloaderAdmin");
+if (auth) {
+    window.location.href = "main.html";
+}
+
+
 let db = firebase.firestore();
 
 db.collection("websites")
@@ -10,7 +16,17 @@ db.collection("websites")
     );
   });
 
-function login() {
+$("#pwd").keyup(function (e) {
+  if (e.keyCode == 13) {
+    loginAdmin();
+  }
+});
+
+function loginButtonClicked() {
+  loginAdmin();
+}
+
+function loginAdmin() {
   let email = document.getElementById("uname").value;
   let password = document.getElementById("pwd").value;
 
