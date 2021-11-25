@@ -6508,8 +6508,8 @@ legend {
   --teal: #20c997;
   --white: #fff;
   --gray: #6c757d;
-  --primary: #00a4f8;
-  --secondary: #6c757d;
+  --primary: #fff;
+  --secondary: #E8E8E8;
   --success: #22ca80;
   --info: #00a4f8;
   --warning: #fdc16a;

@@ -49,8 +49,8 @@ db.collection("social_llinks")
     querySnapshot.forEach((doc) => {
       linkStatus = doc.data().active;
       $("#social_links").append(`<tr>
-            <td class="border-top-0 px-2 py-4">${doc.data().name} </td>
-            <td class="border-top-0 text-muted px-2 py-4 font-14">${
+            <td class="px-2 py-4">${doc.data().name} </td>
+            <td class="text-muted px-2 py-4 font-14">${
               doc.data().url
             }</td>
         

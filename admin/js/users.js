@@ -20,17 +20,6 @@ db.collection("DownloadUsers")
   .then((querySnapshot) => {
     querySnapshot.docs.forEach((doc) => {
       downloadingUsersArr.push(doc.data());
-      $("#downloadUsers").append(`<tr class="downloadUser">
-      <td class="px-2 py-4">${j} </td>
-        <td class="px-2 py-4">${doc.data().country} </td>
-        <td class="px-2 py-4">${getDate(doc.data().timeStamp)} </td>
-        <td class="px-2 py-4">${doc.data().ip} </td>
-        <td class="text-muted px-2 py-4 font-14">${
-          doc.data().isFromMobile ? "Mobile" : "PC"
-        }</td>
-    
-</tr>`);
-      j++;
     });
     dsetPaginationNumber(downloadingUsersArr);
     changePage1(1);
@@ -195,6 +184,7 @@ function changePage1(page) {
   ) {
     downloadeingUser.innerHTML += `<tr>
     <td class="px-2 py-4">${i + 1} </td>
+    <td class="px-2 py-4">${downloadingUsersArr[i].url} </td>
     <td class="px-2 py-4">${downloadingUsersArr[i].country} </td>
     <td class="px-2 py-4">${getDate(downloadingUsersArr[i].timeStamp)} </td>
     <td class="px-2 py-4">${downloadingUsersArr[i].ip} </td>
@@ -204,5 +194,4 @@ function changePage1(page) {
 
 </tr>`;
   }
-
 }

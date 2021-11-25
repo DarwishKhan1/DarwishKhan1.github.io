@@ -20,7 +20,7 @@
 
 :root {
     --primary: #ffff;
-    --accent: #00aeff;
+    --accent: #6251E6;
     --purple: #00A4F8;
     --pink: #e83e8c;
     --red: #ff4f70;
@@ -11397,7 +11397,7 @@ User Profile
 
 #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .list-divider,
 #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .list-divider {
-    background: #818181;
+    background-color: #818181;
 }
 
 #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .sidebar-link,

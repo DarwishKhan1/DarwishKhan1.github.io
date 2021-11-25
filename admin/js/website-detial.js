@@ -49,10 +49,11 @@ db.collection("websites")
     $("#secondryColorValue").val(webData.secondaryColor);
     $("#primaryColorValue").val(webData.primaryColor);
     $("#downloadPageColorValue").val(webData.downloadPageColor);
+    $("#overlay1").css("display", "none");
   })
   .catch(function (err) {
-    alert(err.message);
     $("#overlay1").css("display", "none");
+    alert(err.message);
   });
 
 const mobilescreenfileupload = async (image) => {
