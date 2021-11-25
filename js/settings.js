@@ -1,10 +1,8 @@
 $("#overlay").css("display", "flex");
-let database = firebase.firestore();
 
+let database1 = firebase.firestore();
 
-
-database
-  .collection("websites")
+database1  .collection("websites")
   .doc("website")
   .get()
   .then((docs) => {
@@ -34,11 +32,10 @@ database
   })
   .catch((err) => {
     $("#overlay").css("display", "none");
-    alert(err.message);
+    console.log(err.message);
   });
 
-database
-  .collection("social_llinks")
+database1  .collection("social_llinks")
   .get()
   .then(function (data) {
     data.forEach(function (item) {
@@ -49,5 +46,5 @@ database
   })
   .catch((err) => {
     $("#overlay").css("display", "none");
-    alert(err.message);
+    console.log(err.message);
   });
