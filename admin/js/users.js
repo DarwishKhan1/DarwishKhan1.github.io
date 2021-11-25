@@ -20,7 +20,7 @@ db.collection("DownloadUsers")
   .then((querySnapshot) => {
     querySnapshot.docs.forEach((doc) => {
       downloadingUsersArr.push(doc.data());
-    });
+   });
     dsetPaginationNumber(downloadingUsersArr);
     changePage1(1);
   })
@@ -184,7 +184,6 @@ function changePage1(page) {
   ) {
     downloadeingUser.innerHTML += `<tr>
     <td class="px-2 py-4">${i + 1} </td>
-    <td class="px-2 py-4">${downloadingUsersArr[i].url} </td>
     <td class="px-2 py-4">${downloadingUsersArr[i].country} </td>
     <td class="px-2 py-4">${getDate(downloadingUsersArr[i].timeStamp)} </td>
     <td class="px-2 py-4">${downloadingUsersArr[i].ip} </td>

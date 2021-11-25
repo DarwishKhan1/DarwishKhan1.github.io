@@ -335,26 +335,6 @@
             });
         </script>
 
-        <script>
-            $(document).ready(function () {
-                $("#visitingUserSearch").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#zero_config tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-
-                $("#downloadUserSearch").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#zero_config1 tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-
-
-        </script>
-
 </body>
 
 </html>
