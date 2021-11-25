@@ -106,18 +106,6 @@ function changePage(page) {
 
 </tr>`;
   }
-
-  if (page == 1) {
-    btn_prev.style.visibility = "hidden";
-  } else {
-    btn_prev.style.visibility = "visible";
-  }
-
-  if (page == numPages()) {
-    btn_next.style.visibility = "hidden";
-  } else {
-    btn_next.style.visibility = "visible";
-  }
 }
 
 function numPages() {
@@ -217,15 +205,4 @@ function changePage1(page) {
 </tr>`;
   }
 
-  if (page == 1) {
-    btn_prev.style.visibility = "hidden";
-  } else {
-    btn_prev.style.visibility = "visible";
-  }
-
-  if (page == numPages()) {
-    btn_next.style.visibility = "hidden";
-  } else {
-    btn_next.style.visibility = "visible";
-  }
 }
