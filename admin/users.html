@@ -206,9 +206,9 @@
         <!-- ============================================================== -->
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
-   
+
         <div id="users">
-        
+
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" id="visitorsTab">
                     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#vistorsContent" role="tab"
@@ -225,14 +225,7 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div id="vistorsContent" class="tabcontent" style="display: block;">
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group mr-2">
-                                    <label for="visitingUserSearch">Search Visitors</label>
-                                    <input type="text" class="form-control" id="visitingUserSearch" placeholder="Search Visitors">
-                                </div>
-                            </div>
-                          </div>
+
 
                         <div class="table-responsive">
 
@@ -264,14 +257,6 @@
                     <!-- Audios -->
                     <div class="tab-pane fade" id="downlaodersContent" role="tabpanel"
                         aria-labelledby="pills-profile-tab" style="display: none;">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group mr-2">
-                                    <label for="downloadUserSearch">Search Downloaders</label>
-                                    <input type="text" class="form-control" id="downloadUserSearch" placeholder="Search Downloaders">
-                                </div>
-                            </div>
-                          </div>
 
                         <div class="table-responsive">
 
@@ -324,7 +309,7 @@
         <script src="dist/js/sidebarmenu.js"></script>
         <!--Custom JavaScript -->
         <script src="dist/js/custom.min.js"></script>
-    
+
         <script src="./js/firebase.js"></script>
 
         <script>
@@ -333,15 +318,6 @@
         <script src="./js/rights.js"></script>
 
         <script>
-            $(document).ready(function () {
-                $("#myInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#zero_config tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-
 
             $("#visitorsTab").click(async () => {
                 $("#downlaodersContent").css("display", "none");
@@ -372,7 +348,7 @@
                 });
             });
 
-            
+
         </script>
 
 </body>
