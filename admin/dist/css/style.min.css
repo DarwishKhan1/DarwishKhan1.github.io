@@ -6498,6 +6498,7 @@ legend {
  */
 
 :root {
+  --accent: #6251E6;
   --gray-dark: #1c2d41;
   --blue: #00a4f8;
   --indigo: #6610f2;
