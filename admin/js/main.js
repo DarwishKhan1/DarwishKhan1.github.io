@@ -17,6 +17,7 @@ db.collection("DownloadUsers")
     $("#websiteCount").html(querySnapshot.docs.length);
 
     showDownladerDataOnMap();
+    showTopDownloadingCountries();
   })
   .catch((err) => {
     alert(err.message);
@@ -36,6 +37,7 @@ db.collection("VisitingUsers")
     $("#socialLinksCount").html(querySnapshot.docs.length);
 
     showVisitorDataOnMap();
+    showTopVisitingCountries();
   })
   .catch((err) => {
     alert(err.message);
@@ -62,13 +64,66 @@ db.collection("social_llinks")
     console.log("Error getting documents: ", error);
   });
 
+function showTopVisitingCountries() {
+  const countries = [];
+
+  VisitingUsers.forEach((item) => {
+    const index = countries.findIndex((user) => user.country === item.country);
+
+    if (index < 0) {
+      const data = { country: item.country, users: 1 };
+      countries.push(data);
+    } else {
+      countries[index].users = countries[index].users + 1;
+    }
+  });
+
+  let topCountries = _.sortBy(countries, "users");
+  topCountries = topCountries.reverse();
+
+  for (let i = 0; i < topCountries.length; i++) {
+    $("#topVisitingCountries").append(`
+        <tr>
+          <td class="px-2 py-4">${i + 1} </td>
+          <td class="px-2 py-4">${topCountries[i].country} </td>
+          <td class="px-2 py-4">${topCountries[i].users} </td>
+        </tr>`);
+  }
+}
+
+function showTopDownloadingCountries() {
+  const countries = [];
+
+  DownloadUsers.forEach((item) => {
+    const index = countries.findIndex((user) => user.country === item.country);
+
+    if (index < 0) {
+      const data = { country: item.country, users: 1 };
+      countries.push(data);
+    } else {
+      countries[index].users = countries[index].users + 1;
+    }
+  });
+
+  let topCountries = _.sortBy(countries, "users");
+  topCountries = topCountries.reverse();
+
+  for (let i = 0; i < topCountries.length; i++) {
+    $("#topDownloadingCountries").append(`
+        <tr>
+          <td class="px-2 py-4">${i + 1} </td>
+          <td class="px-2 py-4">${topCountries[i].country} </td>
+          <td class="px-2 py-4">${topCountries[i].users} </td>
+        </tr>`);
+  }
+}
+
 // Draw the chart and set the chart values
 function drawChart() {
   const pcUsers = [];
   const mUsers = [];
 
   VisitingUsers.forEach((item) => {
-    
     if (item.isFromMobile) {
       mUsers.push(item);
     } else {

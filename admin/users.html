@@ -180,8 +180,7 @@
                         <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
 
                         <li class="sidebar-item"> <a class="sidebar-link" href="social-links.html"
-                                aria-expanded="false"><i class="fas fa-link"></i><span
-                                    class="hide-menu">Social Links
+                                aria-expanded="false"><i class="fas fa-link"></i><span class="hide-menu">Social Links
                                 </span></a>
                         </li>
 
@@ -191,7 +190,7 @@
                         </li>
 
                         <li class="sidebar-item"> <a class="sidebar-link" href="users.html" aria-expanded="false"><i
-                                    class="icon-user"  style="color: #fff !important; "></i><span class="hide-menu">Users
+                                    class="icon-user" style="color: #fff !important; "></i><span class="hide-menu">Users
                                 </span></a>
                         </li>
 
@@ -207,7 +206,9 @@
         <!-- ============================================================== -->
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
+   
         <div id="users">
+        
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" id="visitorsTab">
                     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#vistorsContent" role="tab"
@@ -223,6 +224,15 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div id="vistorsContent" class="tabcontent" style="display: block;">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mr-2">
+                                    <label for="visitingUserSearch">Search Visitors</label>
+                                    <input type="text" class="form-control" id="visitingUserSearch" placeholder="Search Visitors">
+                                </div>
+                            </div>
+                          </div>
 
                         <div class="table-responsive">
 
@@ -240,16 +250,32 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="row">
+                            <div class="pagination123">
+                                <a href="javascript:prevPage()" id="btn_prev">&laquo;</a>
+                                <div id="totalPages"></div>
+                                <a href="javascript:nextPage()" id="btn_next">&raquo;</a>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Audios -->
                     <div class="tab-pane fade" id="downlaodersContent" role="tabpanel"
                         aria-labelledby="pills-profile-tab" style="display: none;">
-
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mr-2">
+                                    <label for="downloadUserSearch">Search Downloaders</label>
+                                    <input type="text" class="form-control" id="downloadUserSearch" placeholder="Search Downloaders">
+                                </div>
+                            </div>
+                          </div>
 
                         <div class="table-responsive">
 
-                            <table id="zero_config" class="table table-striped table-bordered">
+                            <table id="zero_config1" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -259,10 +285,20 @@
                                         <th>Source</th>
                                     </tr>
                                 </thead>
-                                <tbody id="downloadUsers">
+                                <tbody id="downloadUsers" class="downloadUsers">
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="row">
+                            <div class="pagination123">
+                                <a href="javascript:dprevPage()" id="btn_prev1">&laquo;</a>
+                                <div id="totalPages1"></div>
+                                <a href="javascript:dnextPage()" id="btn_next1">&raquo;</a>
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -288,14 +324,7 @@
         <script src="dist/js/sidebarmenu.js"></script>
         <!--Custom JavaScript -->
         <script src="dist/js/custom.min.js"></script>
-        <!--This page JavaScript -->
-        <!-- <script src="assets/extra-libs/c3/d3.min.js"></script>
-    <script src="assets/extra-libs/c3/c3.min.js"></script>
-    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    <script src="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="dist/js/pages/dashboards/dashboard1.min.js"></script> -->
+    
         <script src="./js/firebase.js"></script>
 
         <script>
@@ -326,6 +355,25 @@
             });
         </script>
 
+        <script>
+            $(document).ready(function () {
+                $("#visitingUserSearch").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#zero_config tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+
+                $("#downloadUserSearch").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#zero_config1 tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+
+            
+        </script>
 
 </body>
 

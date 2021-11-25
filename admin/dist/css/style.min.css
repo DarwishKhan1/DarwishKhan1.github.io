@@ -26,6 +26,27 @@ input {
   list-style: none;
 }
 
+.pagination123 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination123 a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination123 div a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.pagination123 div a:hover:not(.active) {background-color: #ddd;}
+
 #preloader {
   position: absolute;
   top: 0;

@@ -50,7 +50,8 @@ db.collection("websites")
     $("#primaryColorValue").val(webData.primaryColor);
     $("#downloadPageColorValue").val(webData.downloadPageColor);
   })
-  .then(function () {
+  .catch(function (err) {
+    alert(err.message);
     $("#overlay1").css("display", "none");
   });
 
