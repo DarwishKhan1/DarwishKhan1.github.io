@@ -80,6 +80,7 @@ function showTopVisitingCountries() {
 
   let topCountries = _.sortBy(countries, "users");
   topCountries = topCountries.reverse();
+  topCountries = topCountries.slice(0, 10);
 
   for (let i = 0; i < topCountries.length; i++) {
     $("#topVisitingCountries").append(`
@@ -107,6 +108,7 @@ function showTopDownloadingCountries() {
 
   let topCountries = _.sortBy(countries, "users");
   topCountries = topCountries.reverse();
+  topCountries = topCountries.slice(0, 10);
 
   for (let i = 0; i < topCountries.length; i++) {
     $("#topDownloadingCountries").append(`
