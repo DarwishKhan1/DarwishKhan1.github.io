@@ -501,7 +501,7 @@ ol li:before {
 }
 
 .footer2 .contact .btn {
-  background-color: var(--secondary-color);
+  background-color: rgb(121, 0, 0);
   color: #fff;
 }
 

@@ -1,4 +1,8 @@
 $("#overlay").css("display", "flex");
+let database = firebase.firestore();
+
+
+
 database
   .collection("websites")
   .doc("website")
@@ -30,7 +34,7 @@ database
   })
   .catch((err) => {
     $("#overlay").css("display", "none");
-    console.log(err);
+    alert(err.message);
   });
 
 database
@@ -42,4 +46,8 @@ database
       const favicon = document.getElementById(base.id);
       favicon.setAttribute("href", base.url);
     });
+  })
+  .catch((err) => {
+    $("#overlay").css("display", "none");
+    alert(err.message);
   });
