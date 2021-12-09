@@ -30,7 +30,8 @@ const audioExtensions = [
   "webm",
 ];
 
-const isFromMobile = navigator.userAgentData.mobile;
+// const isFromMobile = navigator.userAgentData.mobile;
+const isFromMobile = false;
 
 function getIpAddress(url) {
   return fetch(url).then((res) => res.json());
@@ -505,9 +506,8 @@ const displayData = (url) => {
     });
 };
 
-const getYoutubeSingleVideoData = async (id) => {
-  const videoUrl = `https://www.youtube.com/watch?v=${id}`;
-  await displayData(videoUrl);
+const getYoutubeSingleVideoData = async (url) => {
+  await displayYoutubeData(url);
 };
 
 const showResponse = async () => {
@@ -558,9 +558,7 @@ const showResponse = async () => {
       playlistUrl = playlistUrl[0];
       await getYoutubeMultipleVideosData(playlistUrl);
     } else {
-      playlistUrl = playlistUrl[0].split("?v=");
-      const id = playlistUrl[1];
-      await getYoutubeSingleVideoData(id);
+      await getYoutubeSingleVideoData(url);
     }
     return;
   }
@@ -625,3 +623,194 @@ $("#dismiss-popup-btn").click(function () {
   $("#description").html("");
   document.getElementsByClassName("popup")[0].classList.remove("active");
 });
+
+function convertVideo(item) {
+  const myUrl = "https://videodownloaderapinodejs.herokuapp.com/api/getLink";
+  const myData = {
+    id: item.id,
+    k: item.url,
+  };
+  axios
+    .post(myUrl, myData)
+    .then(function (response) {
+      const data = response.data;
+      const id = "#" + item.filesize;
+
+      $(id).html(`
+     <a
+     href="${data.dlink}"
+     rel="noreferrer"
+     target="_blank"
+     class="btn"
+     data-quality="720"
+     data-type="mp4"
+   >
+     <span>
+       <i class="fa fa-download"></i>
+     </span>
+     <span class="download-label"> Download </span>
+   </a>
+     `);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+const displayYoutubeData = (url) => {
+  var myUrl = "https://videodownloaderapinodejs.herokuapp.com/api";
+  var myData = {
+    url: url,
+  };
+
+  $("#thumbnail").html("");
+  $("#videoDuration").html("");
+  $("#title").html("");
+  $("#result").css("display", "none");
+  $("#overlay").css("display", "flex");
+  $("#singleVideo").html("");
+  $("#singleAudio").html("");
+  $("#playlist").css("display", "none");
+
+  axios
+    .post(myUrl, myData)
+    .then(function (response) {
+      let result = response.data.formats;
+
+      if (result) {
+        result = getVideos(response);
+      }
+
+      $("#overlay").css("display", "none");
+      $("#result").css("display", "inherit");
+      $("#videosTab").css("display", "initial");
+      $("#audiosTab").css("display", "initial");
+
+      const data = response.data;
+      if (result && result.totalVideos.length <= 0) {
+        $("#videosTab").css("display", "none");
+        document.getElementById("pills-profile-tab").classList.add("active");
+        document.getElementById("pills-profile").classList.add("active");
+        document.getElementById("pills-profile").classList.add("show");
+        $("#pills-home-tab").removeClass("active");
+        $("#pills-home").removeClass("show");
+      }
+
+      if (result && result.totalAudios.length <= 0) {
+        $("#audiosTab").css("display", "none");
+        document.getElementById("pills-home-tab").classList.add("active");
+        document.getElementById("pills-home").classList.add("show");
+        document.getElementById("pills-home").classList.add("active");
+        $("#pills-profile-tab").removeClass("active");
+        $("#pills-profile").removeClass("show");
+      }
+
+      if (result && result.totalVideos.length > 0) {
+        $("#thumbnail").append(
+          ` <video controlsList="nodownload" height="300px;" width="100%;" controls poster="${
+            data.thumbnail
+          }"
+          src="${getPreviewVideo(result.totalVideos)}"></video>`
+        );
+      } else if (result && result.totalAudios.length > 0) {
+        $("#thumbnail").append(
+          ` <video controlsList="nodownload" height="300px;" width="100%;" controls poster="${data.thumbnail}"
+          src="${result.totalAudios[0].url}"></video>`
+        );
+      } else if (data.thumbnail) {
+        $("#thumbnail").append(
+          `<img alt="thumbnail" class="thumnail-img" src="${data.thumbnail}" />`
+        );
+      } else {
+        $("#thumbnail").append(
+          `<img alt="thumbnail" class="thumnail-img" src="../assets/placeholder.jpg" />`
+        );
+      }
+
+      $("#title").append(data.title);
+
+      if (data.duration) {
+        $("#videoDuration").append(
+          new Date(parseInt(data.duration) * 1000).toISOString().substr(14, 5)
+        );
+      } else {
+        $("#checkDuration").css("display", "none");
+      }
+
+      if (!result) {
+        $("#response").css("display", "none");
+        $("#copyright-response").css("display", "flex");
+        return;
+      }
+
+      $("#response").css("display", "inherit");
+      $("#copyright-response").css("display", "none");
+
+      result.totalVideos.reverse().forEach((item) => {
+        $("#singleVideo").append(`
+          <tr>
+          <td data-label="Extension">
+             ${
+               item.acodec === "none"
+                 ? "<i class='fas fa-volume-mute'></i>"
+                 : ""
+             }  ${item.ext}
+          </td>
+          <td  data-label="File Size">
+              ${
+                item.filesize > 1024 * 1024 ? formatBytes(item.filesize) : "NaN"
+              }
+          </td>
+        
+            <td data-label="Link" id="${item.filesize}">
+                <button
+                  onclick='convertVideo(${JSON.stringify({
+                    ...item,
+                    id: data.videoId,
+                  })})'
+                  class="btn"
+                  >
+                  <span>
+                    <i class="fa fa-exchange"></i>
+                  </span>
+                  <span class="download-label"> Covert </span>
+                </button>
+              </td> 
+         </tr>`);
+      });
+      result.totalAudios.forEach((item) => {
+        $("#singleAudio").append(`
+            <tr>
+            <td  data-label="Extension">
+               ${item.ext}
+            </td>
+            <td  data-label="File Size">
+                ${
+                  item.filesize > 1024 * 1024
+                    ? formatBytes(item.filesize)
+                    : "NaN"
+                }
+            </td>
+            <td data-label="Link" id="${item.filesize}">
+                <button
+                  onclick='convertVideo(${JSON.stringify({
+                    ...item,
+                    id: data.videoId,
+                  })})'
+                  class="btn"
+                  >
+                  <span>
+                    <i class="fa fa-exchange"></i>
+                  </span>
+                  <span class="download-label"> Covert </span>
+                </button>
+              </td> 
+        </tr>`);
+      });
+    })
+    .catch(function (error) {
+      $("#overlay").css("display", "none");
+      $("#description").append(error.message);
+      document.getElementsByClassName("popup")[0].classList.add("active");
+    });
+};
