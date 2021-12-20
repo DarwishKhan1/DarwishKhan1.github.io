@@ -30,8 +30,10 @@ const audioExtensions = [
   "webm",
 ];
 
-// const isFromMobile = navigator.userAgentData.mobile;
-const isFromMobile = false;
+const isFromMobile =
+  typeof navigator.userAgentData.mobile === "undefined"
+    ? false
+    : navigator.userAgentData.mobile;
 
 function getIpAddress(url) {
   return fetch(url).then((res) => res.json());
@@ -330,6 +332,7 @@ const getPreviewVideo = (videos) => {
 // Display Response
 const displayData = (url) => {
   var myUrl = "https://videodownloaderapinodejs.herokuapp.com/api";
+  // var myUrl = "http://localhost:5000/api";
   var myData = {
     url: url,
   };
@@ -417,7 +420,7 @@ const displayData = (url) => {
       $("#response").css("display", "inherit");
       $("#copyright-response").css("display", "none");
 
-      result.totalVideos.reverse().forEach((item) => {
+      result.totalVideos.forEach((item) => {
         $("#singleVideo").append(`
           <tr>
           <td data-label="Extension">
@@ -502,12 +505,13 @@ const displayData = (url) => {
     .catch(function (error) {
       $("#overlay").css("display", "none");
       $("#description").append(error.message);
+      console.log(error);
       document.getElementsByClassName("popup")[0].classList.add("active");
     });
 };
 
 const getYoutubeSingleVideoData = async (url) => {
-  await displayYoutubeData(url);
+  await displayData(url);
 };
 
 const showResponse = async () => {
@@ -625,7 +629,7 @@ $("#dismiss-popup-btn").click(function () {
 });
 
 function convertVideo(item) {
-  const myUrl = "https://videodownloaderapinodejs.herokuapp.com/api/getLink";
+  const myUrl = "http://localhost:5000/api/getLink";
   const myData = {
     id: item.id,
     k: item.url,
@@ -657,160 +661,171 @@ function convertVideo(item) {
     });
 }
 
-const displayYoutubeData = (url) => {
-  var myUrl = "https://videodownloaderapinodejs.herokuapp.com/api";
-  var myData = {
-    url: url,
-  };
+// const displayYoutubeData = (url) => {
+//   const myUrl = "http://dlphpfd.infinityfreeapp.com/videoapi/public/video_info.php?url=https://www.youtube.com/watch?v=aqz-KE-bpKQ";
+//   axios
+//     .get(myUrl)
+//     .then((response) => {
+//       console.log(response);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
 
-  $("#thumbnail").html("");
-  $("#videoDuration").html("");
-  $("#title").html("");
-  $("#result").css("display", "none");
-  $("#overlay").css("display", "flex");
-  $("#singleVideo").html("");
-  $("#singleAudio").html("");
-  $("#playlist").css("display", "none");
+//   // var myUrl = "https://videodownloaderapinodejs.herokuapp.com/api";
+//   // var myUrl = "http://localhost:5000/api";
+//   // var myData = {
+//   //   url: url,
+//   // };
 
-  axios
-    .post(myUrl, myData)
-    .then(function (response) {
-      let result = response.data.formats;
+//   // $("#thumbnail").html("");
+//   // $("#videoDuration").html("");
+//   // $("#title").html("");
+//   // $("#result").css("display", "none");
+//   // $("#overlay").css("display", "flex");
+//   // $("#singleVideo").html("");
+//   // $("#singleAudio").html("");
+//   // $("#playlist").css("display", "none");
 
-      if (result) {
-        result = getVideos(response);
-      }
+//   // axios
+//   //   .post(myUrl, myData)
+//   //   .then(function (response) {
+//   //     let result = response.data.formats;
 
-      $("#overlay").css("display", "none");
-      $("#result").css("display", "inherit");
-      $("#videosTab").css("display", "initial");
-      $("#audiosTab").css("display", "initial");
+//   //     if (result) {
+//   //       result = getVideos(response);
+//   //     }
 
-      const data = response.data;
-      if (result && result.totalVideos.length <= 0) {
-        $("#videosTab").css("display", "none");
-        document.getElementById("pills-profile-tab").classList.add("active");
-        document.getElementById("pills-profile").classList.add("active");
-        document.getElementById("pills-profile").classList.add("show");
-        $("#pills-home-tab").removeClass("active");
-        $("#pills-home").removeClass("show");
-      }
+//   //     $("#overlay").css("display", "none");
+//   //     $("#result").css("display", "inherit");
+//   //     $("#videosTab").css("display", "initial");
+//   //     $("#audiosTab").css("display", "initial");
 
-      if (result && result.totalAudios.length <= 0) {
-        $("#audiosTab").css("display", "none");
-        document.getElementById("pills-home-tab").classList.add("active");
-        document.getElementById("pills-home").classList.add("show");
-        document.getElementById("pills-home").classList.add("active");
-        $("#pills-profile-tab").removeClass("active");
-        $("#pills-profile").removeClass("show");
-      }
+//   //     const data = response.data;
+//   //     if (result && result.totalVideos.length <= 0) {
+//   //       $("#videosTab").css("display", "none");
+//   //       document.getElementById("pills-profile-tab").classList.add("active");
+//   //       document.getElementById("pills-profile").classList.add("active");
+//   //       document.getElementById("pills-profile").classList.add("show");
+//   //       $("#pills-home-tab").removeClass("active");
+//   //       $("#pills-home").removeClass("show");
+//   //     }
 
-      if (result && result.totalVideos.length > 0) {
-        $("#thumbnail").append(
-          ` <video controlsList="nodownload" height="300px;" width="100%;" controls poster="${
-            data.thumbnail
-          }"
-          src="${getPreviewVideo(result.totalVideos)}"></video>`
-        );
-      } else if (result && result.totalAudios.length > 0) {
-        $("#thumbnail").append(
-          ` <video controlsList="nodownload" height="300px;" width="100%;" controls poster="${data.thumbnail}"
-          src="${result.totalAudios[0].url}"></video>`
-        );
-      } else if (data.thumbnail) {
-        $("#thumbnail").append(
-          `<img alt="thumbnail" class="thumnail-img" src="${data.thumbnail}" />`
-        );
-      } else {
-        $("#thumbnail").append(
-          `<img alt="thumbnail" class="thumnail-img" src="../assets/placeholder.jpg" />`
-        );
-      }
+//   //     if (result && result.totalAudios.length <= 0) {
+//   //       $("#audiosTab").css("display", "none");
+//   //       document.getElementById("pills-home-tab").classList.add("active");
+//   //       document.getElementById("pills-home").classList.add("show");
+//   //       document.getElementById("pills-home").classList.add("active");
+//   //       $("#pills-profile-tab").removeClass("active");
+//   //       $("#pills-profile").removeClass("show");
+//   //     }
 
-      $("#title").append(data.title);
+//   //     if (result && result.totalVideos.length > 0) {
+//   //       $("#thumbnail").append(
+//   //         ` <video controlsList="nodownload" height="300px;" width="100%;" controls poster="${
+//   //           data.thumbnail
+//   //         }"
+//   //         src="${getPreviewVideo(result.totalVideos)}"></video>`
+//   //       );
+//   //     } else if (result && result.totalAudios.length > 0) {
+//   //       $("#thumbnail").append(
+//   //         ` <video controlsList="nodownload" height="300px;" width="100%;" controls poster="${data.thumbnail}"
+//   //         src="${result.totalAudios[0].url}"></video>`
+//   //       );
+//   //     } else if (data.thumbnail) {
+//   //       $("#thumbnail").append(
+//   //         `<img alt="thumbnail" class="thumnail-img" src="${data.thumbnail}" />`
+//   //       );
+//   //     } else {
+//   //       $("#thumbnail").append(
+//   //         `<img alt="thumbnail" class="thumnail-img" src="../assets/placeholder.jpg" />`
+//   //       );
+//   //     }
 
-      if (data.duration) {
-        $("#videoDuration").append(
-          new Date(parseInt(data.duration) * 1000).toISOString().substr(14, 5)
-        );
-      } else {
-        $("#checkDuration").css("display", "none");
-      }
+//   //     $("#title").append(data.title);
 
-      if (!result) {
-        $("#response").css("display", "none");
-        $("#copyright-response").css("display", "flex");
-        return;
-      }
+//   //     if (data.duration) {
+//   //       $("#videoDuration").append(
+//   //         new Date(parseInt(data.duration) * 1000).toISOString().substr(14, 5)
+//   //       );
+//   //     } else {
+//   //       $("#checkDuration").css("display", "none");
+//   //     }
 
-      $("#response").css("display", "inherit");
-      $("#copyright-response").css("display", "none");
+//   //     if (!result) {
+//   //       $("#response").css("display", "none");
+//   //       $("#copyright-response").css("display", "flex");
+//   //       return;
+//   //     }
 
-      result.totalVideos.reverse().forEach((item) => {
-        $("#singleVideo").append(`
-          <tr>
-          <td data-label="Extension">
-             ${
-               item.acodec === "none"
-                 ? "<i class='fas fa-volume-mute'></i>"
-                 : ""
-             }  ${item.ext}
-          </td>
-          <td  data-label="File Size">
-              ${
-                item.filesize > 1024 * 1024 ? formatBytes(item.filesize) : "NaN"
-              }
-          </td>
-        
-            <td data-label="Link" id="${item.filesize}">
-                <button
-                  onclick='convertVideo(${JSON.stringify({
-                    ...item,
-                    id: data.videoId,
-                  })})'
-                  class="btn"
-                  >
-                  <span>
-                    <i class="fa fa-exchange"></i>
-                  </span>
-                  <span class="download-label"> Covert </span>
-                </button>
-              </td> 
-         </tr>`);
-      });
-      result.totalAudios.forEach((item) => {
-        $("#singleAudio").append(`
-            <tr>
-            <td  data-label="Extension">
-               ${item.ext}
-            </td>
-            <td  data-label="File Size">
-                ${
-                  item.filesize > 1024 * 1024
-                    ? formatBytes(item.filesize)
-                    : "NaN"
-                }
-            </td>
-            <td data-label="Link" id="${item.filesize}">
-                <button
-                  onclick='convertVideo(${JSON.stringify({
-                    ...item,
-                    id: data.videoId,
-                  })})'
-                  class="btn"
-                  >
-                  <span>
-                    <i class="fa fa-exchange"></i>
-                  </span>
-                  <span class="download-label"> Covert </span>
-                </button>
-              </td> 
-        </tr>`);
-      });
-    })
-    .catch(function (error) {
-      $("#overlay").css("display", "none");
-      $("#description").append(error.message);
-      document.getElementsByClassName("popup")[0].classList.add("active");
-    });
-};
+//   //     $("#response").css("display", "inherit");
+//   //     $("#copyright-response").css("display", "none");
+
+//   //     result.totalVideos.reverse().forEach((item) => {
+//   //       $("#singleVideo").append(`
+//   //         <tr>
+//   //         <td data-label="Extension">
+//   //            ${
+//   //              item.acodec === "none"
+//   //                ? "<i class='fas fa-volume-mute'></i>"
+//   //                : ""
+//   //            }  ${item.ext}
+//   //         </td>
+//   //         <td  data-label="File Size">
+//   //             ${
+//   //               item.filesize > 1024 * 1024 ? formatBytes(item.filesize) : "NaN"
+//   //             }
+//   //         </td>
+
+//   //           <td data-label="Link" id="${item.filesize}">
+//   //               <button
+//   //                 onclick='convertVideo(${JSON.stringify({
+//   //                   ...item,
+//   //                   id: data.videoId,
+//   //                 })})'
+//   //                 class="btn"
+//   //                 >
+//   //                 <span>
+//   //                   <i class="fa fa-exchange"></i>
+//   //                 </span>
+//   //                 <span class="download-label"> Covert </span>
+//   //               </button>
+//   //             </td>
+//   //        </tr>`);
+//   //     });
+//   //     result.totalAudios.forEach((item) => {
+//   //       $("#singleAudio").append(`
+//   //           <tr>
+//   //           <td  data-label="Extension">
+//   //              ${item.ext}
+//   //           </td>
+//   //           <td  data-label="File Size">
+//   //               ${
+//   //                 item.filesize > 1024 * 1024
+//   //                   ? formatBytes(item.filesize)
+//   //                   : "NaN"
+//   //               }
+//   //           </td>
+//   //           <td data-label="Link" id="${item.filesize}">
+//   //               <button
+//   //                 onclick='convertVideo(${JSON.stringify({
+//   //                   ...item,
+//   //                   id: data.videoId,
+//   //                 })})'
+//   //                 class="btn"
+//   //                 >
+//   //                 <span>
+//   //                   <i class="fa fa-exchange"></i>
+//   //                 </span>
+//   //                 <span class="download-label"> Covert </span>
+//   //               </button>
+//   //             </td>
+//   //       </tr>`);
+//   //     });
+//   //   })
+//   //   .catch(function (error) {
+//   //     $("#overlay").css("display", "none");
+//   //     $("#description").append(error.message);
+//   //     document.getElementsByClassName("popup")[0].classList.add("active");
+//   //   });
+// };
